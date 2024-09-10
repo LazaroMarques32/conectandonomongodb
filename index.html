@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Record User Action</title>
+</head>
+<body>
+    <h1>Record User Action</h1>
+    <form id="actionForm">
+        <label for="userId">User ID:</label>
+        <input type="text" id="userId" name="userId" required>
+        <br>
+        <label for="action">Action:</label>
+        <input type="text" id="action" name="action" required>
+        <br>
+        <button type="submit">Submit Action</button>
+    </form>
+
+    <script>
+        document.getElementById('actionForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const userId = document.getElementById('userId').value;
+            const action = document.getElementById('action').value;
+
+            const response = await fetch('http://localhost:3000/api/user-actions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userId, action }),
+            });
+
+            if (response.ok) {
+                alert('Action recorded successfully!');
+            } else {
+                alert('Failed to record action');
+            }
+        });
+    </script>
+</body>
+</html>
+
